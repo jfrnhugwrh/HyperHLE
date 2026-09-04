@@ -18,7 +18,7 @@ const MAP_FILE: i32 = 0x0000;
 const MAP_ANON: i32 = 0x1000;
 #[allow(dead_code)]
 const MAP_FIXED: i32 = 0x0010;
-const MAP_FAILED: MutVoidPtr = MutVoidPtr::from_bits(0xFFFF_FFFF);
+const MAP_FAILED: MutVoidPtr = MutVoidPtr::from_bits(0xffff_ffff);
 
 #[derive(Default)]
 pub struct State {
