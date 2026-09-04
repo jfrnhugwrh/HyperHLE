@@ -23,12 +23,12 @@
 #![allow(clippy::too_many_arguments)] // It's not our fault!
 
 pub mod accelerate;
+pub mod accounts;
 pub mod address_book;
 pub mod address_book_ui;
-pub mod accounts;
+pub mod assets_library;
 pub mod audio_toolbox;
 pub mod avfoundation;
-pub mod assets_library;
 pub mod captive_network;
 pub mod carbon_core;
 pub mod cf_http_message;
@@ -58,8 +58,8 @@ pub mod libsqlite3;
 pub mod libxml2;
 pub mod map_kit;
 pub mod media_player;
-pub mod metal;
 pub mod message_ui;
+pub mod metal;
 pub mod mobile_core_services;
 pub mod openal;
 pub mod opengles;

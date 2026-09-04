@@ -896,8 +896,7 @@ const UIApplicationStatusBarOrientationUserInfoKey: &str =
     "UIApplicationStatusBarOrientationUserInfoKey";
 const UIApplicationBackgroundFetchIntervalMinimum: &str =
     "UIApplicationBackgroundFetchIntervalMinimum";
-const UIApplicationBackgroundFetchIntervalNever: &str =
-    "UIApplicationBackgroundFetchIntervalNever";
+const UIApplicationBackgroundFetchIntervalNever: &str = "UIApplicationBackgroundFetchIntervalNever";
 // Launch options keys — Apple `UIApplication.h` (`UIApplicationLaunchOptionsKey`).
 const UIApplicationLaunchOptionsURLKey: &str = "UIApplicationLaunchOptionsURLKey";
 const UIApplicationLaunchOptionsSourceApplicationKey: &str =

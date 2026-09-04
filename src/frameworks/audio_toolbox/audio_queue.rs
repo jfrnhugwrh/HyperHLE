@@ -17,9 +17,8 @@ use crate::dyld::{export_c_func, FunctionExports};
 use crate::frameworks::carbon_core::OSStatus;
 use crate::frameworks::core_audio_types::{
     debug_fourcc, fourcc, kAudioFormatAppleIMA4, kAudioFormatFlagIsBigEndian,
-    kAudioFormatFlagIsFloat, kAudioFormatFlagIsPacked,
-    kAudioFormatLinearPCM, kAudioFormatMPEG4AAC, kAudioFormatMPEGLayer3,
-    AudioStreamBasicDescription,
+    kAudioFormatFlagIsFloat, kAudioFormatFlagIsPacked, kAudioFormatLinearPCM, kAudioFormatMPEG4AAC,
+    kAudioFormatMPEGLayer3, AudioStreamBasicDescription,
 };
 use crate::frameworks::core_foundation::cf_run_loop::{
     kCFRunLoopCommonModes, CFRunLoopGetMain, CFRunLoopMode, CFRunLoopRef,

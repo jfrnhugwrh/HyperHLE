@@ -13,11 +13,11 @@ use crate::frameworks::foundation::{ns_data, ns_string, NSInteger};
 use crate::frameworks::uikit::ui_graphics::UIGraphicsGetCurrentContext;
 use crate::fs::GuestPath;
 use crate::image::Image;
+use crate::mem::MutVoidPtr;
 use crate::objc::{
     autorelease, id, msg, msg_class, msg_send, nil, objc_classes, release, retain, ClassExports,
     HostObject, NSZonePtr, SEL,
 };
-use crate::mem::MutVoidPtr;
 use crate::Environment;
 use std::collections::HashMap;
 

@@ -758,7 +758,11 @@ fn app_picker_inner(
             quick_options_device_model_open = !quick_options_device_model_open;
             () = msg![env; (quick_options_stuff.device_model_menu)
                 setHidden:(!quick_options_device_model_open)];
-            let arrow = if quick_options_device_model_open { "▲" } else { "▼" };
+            let arrow = if quick_options_device_model_open {
+                "▲"
+            } else {
+                "▼"
+            };
             let title = format!(
                 "{} {}",
                 device_model_label_for_tag(quick_options_device_tag),
@@ -835,9 +839,7 @@ fn app_picker_inner(
             // No override — fall back to the app bundle / built-in default.
         } else if tag == DEVICE_TAG_AUTO {
             option_args.push("--device-family=auto".to_string());
-        } else if let Some(family) =
-            crate::window::DeviceFamily::ALL_SELECTABLE.get(tag as usize)
-        {
+        } else if let Some(family) = crate::window::DeviceFamily::ALL_SELECTABLE.get(tag as usize) {
             option_args.push(format!("--device-family={}", family.option_name()));
         }
     }
@@ -1797,7 +1799,10 @@ fn make_device_model_dropdown(
     // Scrollbar track (full height) and thumb.
     let track_view: id = msg_class![env; UIView alloc];
     let track_frame = CGRect {
-        origin: CGPoint { x: list_width, y: 0.0 },
+        origin: CGPoint {
+            x: list_width,
+            y: 0.0,
+        },
         size: CGSize {
             width: scrollbar_width,
             height: visible_menu_height,
@@ -1810,7 +1815,10 @@ fn make_device_model_dropdown(
 
     let thumb_view: id = msg_class![env; UIView alloc];
     let thumb_frame = CGRect {
-        origin: CGPoint { x: list_width, y: 0.0 },
+        origin: CGPoint {
+            x: list_width,
+            y: 0.0,
+        },
         size: CGSize {
             width: scrollbar_width,
             height: 54.0,
@@ -1825,7 +1833,10 @@ fn make_device_model_dropdown(
     let clear: id = msg_class![env; UIColor clearColor];
     let up_btn: id = msg_class![env; UIButton buttonWithType:UIButtonTypeCustom];
     let up_frame = CGRect {
-        origin: CGPoint { x: list_width, y: 0.0 },
+        origin: CGPoint {
+            x: list_width,
+            y: 0.0,
+        },
         size: CGSize {
             width: scrollbar_width,
             height: visible_menu_height / 2.0,

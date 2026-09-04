@@ -112,7 +112,10 @@ impl DeviceFamily {
     }
 
     pub fn is_phone_568(&self) -> bool {
-        matches!(self, DeviceFamily::iPhone5 | DeviceFamily::iPhone5c | DeviceFamily::iPodTouch5)
+        matches!(
+            self,
+            DeviceFamily::iPhone5 | DeviceFamily::iPhone5c | DeviceFamily::iPodTouch5
+        )
     }
 
     pub fn is_retina(&self) -> bool {
@@ -218,9 +221,7 @@ impl DeviceFamily {
             // intentionally cap this at 1 GiB even though the address space is
             // 4 GiB, leaving headroom for the guest heap, stacks and mapped
             // libraries.
-            DeviceFamily::iPad5
-            | DeviceFamily::iPadMini2
-            | DeviceFamily::iPadMini3 => 1024 * MIB,
+            DeviceFamily::iPad5 | DeviceFamily::iPadMini2 | DeviceFamily::iPadMini3 => 1024 * MIB,
         }
     }
 
@@ -656,7 +657,8 @@ impl Window {
         let device_family = options.device_family.unwrap_or(DeviceFamily::iPhone);
         let device_orientation = options.initial_orientation;
         let fullscreen = options.fullscreen;
-        let portrait_screen_size = host_screen_size.unwrap_or_else(|| device_family.portrait_size());
+        let portrait_screen_size =
+            host_screen_size.unwrap_or_else(|| device_family.portrait_size());
 
         let mut window = if Self::rotatable_fullscreen() {
             // Without this, SDL will force fullscreen mode to be portrait.
@@ -680,8 +682,11 @@ impl Window {
                 .unwrap();
             window
         } else {
-            let (width, height) =
-                size_for_orientation_from_size(portrait_screen_size, device_orientation, scale_hack);
+            let (width, height) = size_for_orientation_from_size(
+                portrait_screen_size,
+                device_orientation,
+                scale_hack,
+            );
             let window = video_ctx
                 .window(title, width, height)
                 .position_centered()
@@ -1894,8 +1899,11 @@ impl Window {
     /// The aspect ratio of this region always reflects the guest app's view of
     /// the world, but the scale and orientation might not.
     pub fn viewport(&self) -> (u32, u32, u32, u32) {
-        let (app_width, app_height) =
-            size_for_orientation_from_size(self.screen_size(), self.device_orientation, self.scale_hack);
+        let (app_width, app_height) = size_for_orientation_from_size(
+            self.screen_size(),
+            self.device_orientation,
+            self.scale_hack,
+        );
         if !self.fullscreen && !Self::rotatable_fullscreen() {
             return (0, 0, app_width, app_height);
         }

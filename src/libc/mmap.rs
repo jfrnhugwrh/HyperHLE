@@ -7,7 +7,7 @@
 use crate::dyld::FunctionExports;
 use crate::environment::Environment;
 use crate::export_c_func;
-use crate::libc::errno::{set_errno, EIO, EINVAL, ENOMEM};
+use crate::libc::errno::{set_errno, EINVAL, EIO, ENOMEM};
 use crate::libc::posix_io;
 use crate::libc::posix_io::{off_t, open_direct, FileDescriptor, SEEK_SET};
 use crate::mem::{ConstPtr, GuestUSize, MutVoidPtr, PAGE_SIZE, PAGE_SIZE_ALIGN_MASK};
@@ -153,7 +153,8 @@ fn mmap(
         if new_offset != offset {
             log!(
                 "Warning: mmap: lseek to offset {} failed (returned {}); returning MAP_FAILED",
-                offset, new_offset
+                offset,
+                new_offset
             );
             env.mem.free(ptr);
             set_errno(env, EIO);
@@ -169,7 +170,9 @@ fn mmap(
         } else if (read as u32) < len {
             log!(
                 "Warning: mmap: read only {} of {} bytes from fd {}; padding remainder with zeros",
-                read, len, fd
+                read,
+                len,
+                fd
             );
             // Remainder is already zeroed (calloc)
         }
@@ -184,20 +187,12 @@ fn mmap(
 fn munmap(env: &mut Environment, addr: MutVoidPtr, len: GuestUSize) -> i32 {
     // TODO: handle errno properly
     set_errno(env, 0);
-    log_dbg!(
-        "munmap({:?}, {})",
-        addr,
-        len
-    );
+    log_dbg!("munmap({:?}, {})", addr, len);
 
     if len == 0 {
         set_errno(env, EINVAL);
         // TODO: should we clear allocations for `addr` here too?
-        log!(
-            "Warning: munmap({:?}, {}) failed, returning -1",
-            addr,
-            len
-        );
+        log!("Warning: munmap({:?}, {}) failed, returning -1", addr, len);
         return -1;
     }
 
@@ -205,7 +200,9 @@ fn munmap(env: &mut Environment, addr: MutVoidPtr, len: GuestUSize) -> i32 {
         if expected_len != len {
             log_dbg!(
                 "munmap({:?}, {}): length mismatch (expected {}), proceeding anyway",
-                addr, len, expected_len
+                addr,
+                len,
+                expected_len
             );
         }
         env.mem.free(addr);
@@ -232,7 +229,8 @@ fn munmap(env: &mut Environment, addr: MutVoidPtr, len: GuestUSize) -> i32 {
         } else {
             log_dbg!(
                 "munmap({:?}, {}): unknown mapping, succeeding as no-op (compatibility)",
-                addr, len
+                addr,
+                len
             );
             set_errno(env, 0);
             0
@@ -263,12 +261,7 @@ fn shm_open(env: &mut Environment, name: ConstPtr<u8>, oflag: i32, mode: u32) ->
     set_errno(env, 0);
 
     let name_str = env.mem.cstr_at_utf8(name).unwrap_or("<invalid>");
-    log_dbg!(
-        "shm_open({:?}, {:#x}, {:#x})",
-        name_str,
-        oflag,
-        mode
-    );
+    log_dbg!("shm_open({:?}, {:#x}, {:#x})", name_str, oflag, mode);
 
     // Используем open_direct! Параметр mode для эмулятора здесь не нужен,
     // поэтому просто передаем env, name и oflag.

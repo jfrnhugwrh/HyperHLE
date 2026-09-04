@@ -20,7 +20,9 @@ use crate::gles::{
     create_gles1_ctx, create_gles2_ctx, create_gles3_ctx, gles1_on_gl2, GLESContext, GLES,
 };
 use crate::mem::MutPtr;
-use crate::objc::{id, msg, msg_class, nil, objc_classes, release, retain, ClassExports, HostObject};
+use crate::objc::{
+    id, msg, msg_class, nil, objc_classes, release, retain, ClassExports, HostObject,
+};
 use crate::options::Options;
 use crate::Environment;
 use std::cell::RefCell;
@@ -1421,12 +1423,11 @@ unsafe fn present_renderbuffer(env: &mut Environment) {
     // FIXME: A cleaner solution would be to read the actual transform from
     //        the EAGL layer's view hierarchy and apply it here, instead of
     //        using a device-family heuristic.
-    let needs_autorotation_compensation =
-        device_family.is_ipad()
-            && !matches!(
-                device_orientation,
-                crate::window::DeviceOrientation::Portrait
-            );
+    let needs_autorotation_compensation = device_family.is_ipad()
+        && !matches!(
+            device_orientation,
+            crate::window::DeviceOrientation::Portrait
+        );
     let rotation_matrix = if std::env::var_os("TOUCHHLE_DISABLE_PRESENT_ROTATION").is_some() {
         log_once!(
             "TOUCHHLE_DISABLE_PRESENT_ROTATION=1: presenting EAGL renderbuffer without texture rotation"

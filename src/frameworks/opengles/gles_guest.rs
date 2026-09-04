@@ -3333,7 +3333,9 @@ fn glVertexAttrib1f(env: &mut Environment, index: GLuint, x: GLfloat) {
 }
 fn glVertexAttrib1fv(env: &mut Environment, index: GLuint, values: ConstPtr<GLfloat>) {
     let value = env.mem.read(values);
-    with_ctx_and_mem(env, |gles, _mem| unsafe { gles.VertexAttrib1fv(index, &value) });
+    with_ctx_and_mem(env, |gles, _mem| unsafe {
+        gles.VertexAttrib1fv(index, &value)
+    });
 }
 fn glVertexAttrib2f(env: &mut Environment, index: GLuint, x: GLfloat, y: GLfloat) {
     with_ctx_and_mem(env, |gles, _mem| unsafe {
@@ -5422,7 +5424,10 @@ pub const FUNCTIONS: FunctionExports = &[
     export_c_func!(glUnmapBuffer(_)),
     export_c_func_aliased!("glMapBufferRangeEXT", glMapBufferRange(_, _, _, _)),
     export_c_func!(glMapBufferRange(_, _, _, _)),
-    export_c_func_aliased!("glFlushMappedBufferRangeEXT", glFlushMappedBufferRange(_, _, _)),
+    export_c_func_aliased!(
+        "glFlushMappedBufferRangeEXT",
+        glFlushMappedBufferRange(_, _, _)
+    ),
     export_c_func!(glFlushMappedBufferRange(_, _, _)),
     export_c_func!(glCopyBufferSubData(_, _, _, _, _)),
     export_c_func!(glBindBufferBase(_, _, _)),

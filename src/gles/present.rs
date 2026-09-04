@@ -85,14 +85,7 @@ pub unsafe fn present_frame(
     gles.EnableClientState(gles11::VERTEX_ARRAY);
     gles.VertexPointer(2, gles11::FLOAT, 0, vertices.as_ptr() as *const GLvoid);
 
-    let tex_coords: [f32; 12] = [
-        0.0, 0.0,
-        0.0, 1.0,
-        1.0, 0.0,
-        1.0, 0.0,
-        0.0, 1.0,
-        1.0, 1.0,
-    ];
+    let tex_coords: [f32; 12] = [0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0];
     gles.EnableClientState(gles11::TEXTURE_COORD_ARRAY);
     gles.TexCoordPointer(2, gles11::FLOAT, 0, tex_coords.as_ptr() as *const GLvoid);
     // Apply the device-rotation matrix to the TEXTURE matrix, but rotate

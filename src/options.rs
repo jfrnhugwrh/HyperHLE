@@ -182,8 +182,8 @@ impl Options {
                 self.auto_device_family = true;
                 self.device_family = None;
             } else {
-                let parsed =
-                    DeviceFamily::try_from(value).map_err(|_| "Invalid device family".to_string())?;
+                let parsed = DeviceFamily::try_from(value)
+                    .map_err(|_| "Invalid device family".to_string())?;
                 self.auto_device_family = false;
                 self.device_family = Some(parsed);
             }
