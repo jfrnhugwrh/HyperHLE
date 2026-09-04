@@ -228,7 +228,11 @@ pub fn open_direct(env: &mut Environment, path: ConstPtr<u8>, flags: i32) -> Fil
     // Вместо паники — корректная обработка ниже, после разрешения пути.
 
     if path.is_null() {
-        log_dbg!("open({:?}, {:#x}) => -1", path, flags);
+        log_dbg!(
+            "open({:?}, {:#x}) => -1",
+            path,
+            flags
+        );
         return -1;
     }
 
@@ -426,7 +430,12 @@ pub fn read(
             // чтения
             // (когда прочитано больше 0 байт, но меньше запрошенного).
             if bytes_read == 0 {
-                log_dbg!("read({:?}, {:?}, {:#x}) => 0 (EOF)", fd, buffer, size);
+                log_dbg!(
+                    "read({:?}, {:?}, {:#x}) => 0 (EOF)",
+                    fd,
+                    buffer,
+                    size
+                );
             } else if bytes_read < buffer_slice.len() {
                 // POSIX read(2) returning fewer bytes than requested is normal
                 // (e.g., near EOF or for non-regular files). Demote to debug log.
@@ -604,7 +613,13 @@ pub const SEEK_END: i32 = 2;
 
 pub fn lseek(env: &mut Environment, fd: FileDescriptor, offset: off_t, whence: i32) -> off_t {
     let Some(file) = env.libc_state.posix_io.file_for_fd(fd) else {
-        log!("lseek({:?}, {:#x}, {}) => {}", fd, offset, whence, -1);
+        log!(
+            "lseek({:?}, {:#x}, {}) => {}",
+            fd,
+            offset,
+            whence,
+            -1
+        );
         set_errno(env, EBADF);
         return -1;
     };
@@ -726,7 +741,13 @@ pub fn lseek(env: &mut Environment, fd: FileDescriptor, offset: off_t, whence: i
             return -1;
         }
     };
-    log_dbg!("lseek({:?}, {:#x}, {}) => {}", fd, offset, whence, res);
+    log_dbg!(
+        "lseek({:?}, {:#x}, {}) => {}",
+        fd,
+        offset,
+        whence,
+        res
+    );
     res
 }
 
@@ -745,7 +766,10 @@ pub fn close(env: &mut Environment, fd: FileDescriptor) -> i32 {
     if fd < NORMAL_FILENO_BASE {
         // Игнорируем попытки закрыть стандартные потоки (stdin=0, stdout=1,
         // stderr=2)
-        log_dbg!("close({}): ignored standard stream", fd);
+        log_dbg!(
+            "close({}): ignored standard stream",
+            fd
+        );
         return 0;
     }
 
@@ -765,7 +789,10 @@ pub fn close(env: &mut Environment, fd: FileDescriptor) -> i32 {
                 let _ = file_obj.file.sync_all();
             }
 
-            log_dbg!("close({}) -> success", fd);
+            log_dbg!(
+                "close({}) -> success",
+                fd
+            );
             return 0;
         }
     }
@@ -789,7 +816,12 @@ fn rename(env: &mut Environment, old: ConstPtr<u8>, new: ConstPtr<u8>) -> i32 {
         Ok(_) => 0,
         Err(_) => -1,
     };
-    log_dbg!("rename('{}', '{}') => {}", old_str, new_str, res);
+    log_dbg!(
+        "rename('{}', '{}') => {}",
+        old_str,
+        new_str,
+        res
+    );
     res
 }
 
@@ -808,7 +840,11 @@ pub fn getcwd(env: &mut Environment, buf_ptr: MutPtr<u8>, buf_size: GuestUSize) 
 
     if buf_ptr.is_null() {
         let res = env.mem.alloc_and_write_cstr(working_directory);
-        log_dbg!("getcwd(NULL, _) => {:?} ({:?})", res, working_directory);
+        log_dbg!(
+            "getcwd(NULL, _) => {:?} ({:?})",
+            res,
+            working_directory
+        );
         return res;
     }
 

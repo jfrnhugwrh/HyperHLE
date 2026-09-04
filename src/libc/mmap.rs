@@ -117,7 +117,11 @@ fn mmap(
         // Darwin ignores `fd` and `offset` entirely when MAP_ANON is set.
         // Engines (e.g. Adobe AIR) pass garbage there.
         if fd != -1 || offset != 0 {
-            log_dbg!("Warning: mmap MAP_ANON called with fd={} and offset={}. Ignoring them as per OS behavior.", fd, offset);
+            log_dbg!(
+                "Warning: mmap MAP_ANON called with fd={} and offset={}. Ignoring them as per OS behavior.",
+                fd,
+                offset
+            );
         }
 
         if !addr.is_null() {
@@ -180,12 +184,20 @@ fn mmap(
 fn munmap(env: &mut Environment, addr: MutVoidPtr, len: GuestUSize) -> i32 {
     // TODO: handle errno properly
     set_errno(env, 0);
-    log_dbg!("munmap({:?}, {})", addr, len);
+    log_dbg!(
+        "munmap({:?}, {})",
+        addr,
+        len
+    );
 
     if len == 0 {
         set_errno(env, EINVAL);
         // TODO: should we clear allocations for `addr` here too?
-        log!("Warning: munmap({:?}, {}) failed, returning -1", addr, len);
+        log!(
+            "Warning: munmap({:?}, {}) failed, returning -1",
+            addr,
+            len
+        );
         return -1;
     }
 
@@ -211,7 +223,11 @@ fn munmap(env: &mut Environment, addr: MutVoidPtr, len: GuestUSize) -> i32 {
         // execution beyond munmap.
         if addr.is_null() {
             set_errno(env, EINVAL);
-            log!("Warning: munmap({:?}, {}) failed, returning -1 (NULL address)", addr, len);
+            log!(
+                "Warning: munmap({:?}, {}) failed, returning -1 (NULL address)",
+                addr,
+                len
+            );
             -1
         } else {
             log_dbg!(
@@ -247,7 +263,12 @@ fn shm_open(env: &mut Environment, name: ConstPtr<u8>, oflag: i32, mode: u32) ->
     set_errno(env, 0);
 
     let name_str = env.mem.cstr_at_utf8(name).unwrap_or("<invalid>");
-    log_dbg!("shm_open({:?}, {:#x}, {:#x})", name_str, oflag, mode);
+    log_dbg!(
+        "shm_open({:?}, {:#x}, {:#x})",
+        name_str,
+        oflag,
+        mode
+    );
 
     // Используем open_direct! Параметр mode для эмулятора здесь не нужен,
     // поэтому просто передаем env, name и oflag.
