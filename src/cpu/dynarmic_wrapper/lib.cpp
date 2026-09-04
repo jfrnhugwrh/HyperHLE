@@ -197,7 +197,8 @@ public:
     return CallbackForIgnoredOperation();
   }
 
-  CallbackOrAccessTwoWords CompileSendTwoWords(bool, unsigned, CoprocReg) override {
+  CallbackOrAccessTwoWords CompileSendTwoWords(bool, unsigned,
+                                              CoprocReg) override {
     return CallbackForIgnoredOperation();
   }
 
