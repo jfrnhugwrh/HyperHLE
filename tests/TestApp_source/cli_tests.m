@@ -335,8 +335,8 @@ int test_vsnprintf() {
   }
   free(str);
   // Test length modifiers
-  str = str_format("%d %ld %lld %qd %u %lu %llu %qu %llu", 10, 100,
-                   4294967296, 4294967296, 10, 100, 4294967296, 4294967296,
+  str = str_format("%d %ld %lld %qd %u %lu %llu %qu %llu", 10, 100, 4294967296,
+                   4294967296, 10, 100, 4294967296, 4294967296,
                    18446744073709551615ULL);
   if (strcmp(str,
              "10 100 4294967296 4294967296 10 100 4294967296 4294967296 "

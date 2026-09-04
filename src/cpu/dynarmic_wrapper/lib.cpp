@@ -206,17 +206,20 @@ public:
     return CallbackForIgnoredOperation();
   }
 
-  CallbackOrAccessTwoWords CompileGetTwoWords(bool, unsigned, CoprocReg) override {
+  CallbackOrAccessTwoWords CompileGetTwoWords(bool, unsigned,
+                                              CoprocReg) override {
     return CallbackForIgnoredOperation();
   }
 
-  std::optional<Callback> CompileLoadWords(bool, bool, CoprocReg,
-                                           std::optional<std::uint8_t>) override {
+  std::optional<Callback>
+  CompileLoadWords(bool, bool, CoprocReg,
+                   std::optional<std::uint8_t>) override {
     return CallbackForIgnoredOperation();
   }
 
-  std::optional<Callback> CompileStoreWords(bool, bool, CoprocReg,
-                                            std::optional<std::uint8_t>) override {
+  std::optional<Callback>
+  CompileStoreWords(bool, bool, CoprocReg,
+                    std::optional<std::uint8_t>) override {
     return CallbackForIgnoredOperation();
   }
 };
